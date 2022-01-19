@@ -4,21 +4,21 @@ import * as C from "./styles";
 import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
 import WalletBox from "../../components/WalletBox";
+import MessageBox from "../../components/MessageBox";
 
 import expenses from "../../repositories/expenses";
 import gains from "../../repositories/gains";
-import listOfMonths from '../../utils/months';
-import MessageBox from "../../components/MessageBox";
 
 import happyImg from '../../assets/happy.svg';
 import sadImg from '../../assets/sad.svg';
+
 import currentDate from "../../utils/currentDate";
+import listOfMonths from '../../utils/months';
 
 
 const Dashboard: React.FC = () => {
   const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1)
   const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear())
-
 
   const months = useMemo(() => {
     return listOfMonths.map((month, index) => {
@@ -90,7 +90,35 @@ const Dashboard: React.FC = () => {
     }, [monthSelected, yearSelected]),
   }
 
-  const totalBalance = balance.totalGains - balance.totalExpenses;
+  const totalBalance = useMemo(() => {
+    return balance.totalGains - balance.totalExpenses;
+  }, [balance.totalExpenses, balance.totalGains])
+
+  const message = useMemo(() => {
+    if (totalBalance > 0) {
+      return {
+        title: "Muito Bem !",
+        description: "Sua carteira está positiva",
+        footerText: "Continue assim e considere investir o seu saldo",
+        icon: happyImg
+      }
+    } else if (totalBalance === 0) {
+      return {
+        title: "Por pouco !",
+        description: "Você gastou exatamente o que ganhou",
+        footerText: "Tente equilibrar suas contas antes de considerar novos gastos",
+        icon: sadImg
+      }
+    } else {
+      return {
+        title: "Que pena",
+        description: "Sua carteira está negativa",
+        footerText: "Tente equilibrar suas contas antes de considerar novos gastos",
+        icon: sadImg
+      }
+    }
+  }, [totalBalance])
+
 
   const handleSelectedDate = {
     month: (month: string) => {
@@ -124,11 +152,7 @@ const Dashboard: React.FC = () => {
         <WalletBox title="entradas" amount={balance.totalGains} footerLabel={`Última atualização em ${currentDate()}`} icon="arrowUp" color="#f7931b" />
         <WalletBox title="saídas" amount={balance.totalExpenses} footerLabel={`Última atualização em ${currentDate()}`} icon="arrowDown" color="#e44c4e" />
       </C.Content>
-      {totalBalance > 0 ? (
-        <MessageBox title="Muito Bem !" description="Sua carteira está positiva" footerText="Continue assim e considere investir o seu saldo" icon={happyImg} />
-      ) : (
-        <MessageBox title="Que pena" description="Sua carteira está negativa" footerText="Tente equilibrar suas contas antes de considerar novos gastos" icon={sadImg} />
-      )}
+      <MessageBox title={message.title} description={message.description} footerText={message.footerText} icon={message.icon} />
 
     </C.Container>
   );
