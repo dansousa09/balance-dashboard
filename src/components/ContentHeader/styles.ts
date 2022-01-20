@@ -9,7 +9,10 @@ export const Container = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 25px; 
+  position: sticky; 
+  top: 0px; 
+  z-index: 55;
 `;
 
 export const TitleContainer = styled.div<ITitleContainerProps>`

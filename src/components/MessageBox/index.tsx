@@ -1,8 +1,11 @@
 import React from 'react';
 import * as C from './styles';
-
-
-import { IMessageBoxProps } from './interfaces';
+interface IMessageBoxProps {
+    title: string;
+    description: string;
+    footerText: string;
+    icon: string | undefined;
+}
 
 const MessageBox: React.FC<IMessageBoxProps> = ({ title, description, footerText, icon }) => {
     return (
@@ -10,7 +13,9 @@ const MessageBox: React.FC<IMessageBoxProps> = ({ title, description, footerText
             <header>
                 <h1>
                     {title}
-                    <img src={icon} alt={title} />
+                    {icon &&
+                        <img src={icon} alt={title} />
+                    }
                 </h1>
                 <p>{description}</p>
             </header>

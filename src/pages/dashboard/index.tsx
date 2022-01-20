@@ -17,6 +17,10 @@ import sadImg from '../../assets/sad.svg';
 
 import currentDate from "../../utils/currentDate";
 import listOfMonths from '../../utils/months';
+import BarGraphic from "../../components/BarGraphic";
+
+
+// TODO: IMPLEMENTAR O STICKY NO CONTENT HEADER, ESCURECENDO O BACKGROUND QUANDO ULTRAPASSAR O TOP: 60px E O DEIXANDO FIXO
 
 
 const Dashboard: React.FC = () => {
@@ -105,12 +109,18 @@ const Dashboard: React.FC = () => {
         footerText: "Continue assim e considere investir o seu saldo",
         icon: happyImg
       }
-    } else if (totalBalance === 0) {
+    } else if (totalBalance === 0 && balance.totalGains !== 0 && balance.totalExpenses !== 0) {
       return {
         title: "Por pouco !",
         description: "Você gastou exatamente o que ganhou",
         footerText: "Tente equilibrar suas contas antes de considerar novos gastos",
         icon: sadImg
+      }
+    } else if (balance.totalGains === 0 && balance.totalExpenses === 0 && totalBalance === 0 ) {
+      return {
+        title: "Ops!",
+        description: "Ainda sem registros...",
+        footerText: "Adicione os registros de ganhos e/ou despesas a serem calculados",
       }
     } else {
       return {
@@ -120,7 +130,7 @@ const Dashboard: React.FC = () => {
         icon: sadImg
       }
     }
-  }, [totalBalance])
+  }, [balance.totalExpenses, balance.totalGains, totalBalance])
 
   const relationExpensesVsGains = useMemo(() => {
     const total = balance.totalGains + balance.totalExpenses
@@ -198,6 +208,91 @@ const Dashboard: React.FC = () => {
       })
   }, [yearSelected])
 
+  const relationExpensesRecurrentVsEventual = useMemo(() => {
+    let amountRecurrent = 0;
+    let amountEventual = 0;
+
+    expenses
+      .filter(expense => {
+        const date = new Date(expense.date);
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear()
+
+        return month === monthSelected && year === yearSelected;
+      })
+      .forEach(expense => {
+        if (expense.frequency === 'recorrente') {
+          return amountRecurrent += +expense.amount;
+        } else {
+          return amountEventual += +expense.amount;
+
+        }
+      });
+
+    const total = amountRecurrent + amountEventual;
+
+    return [
+      {
+        id: uuid(),
+        name: 'Recorrentes',
+        amount: amountRecurrent,
+        percent: +((amountRecurrent / total) * 100).toFixed(1),
+        color: "#f7931b"
+      },
+      {
+        id: uuid(),
+        name: 'Eventuais',
+        amount: amountEventual,
+        percent: +((amountEventual / total) * 100).toFixed(1),
+        color: "#e44c4e"
+      }
+    ]
+
+  }, [monthSelected, yearSelected])
+
+  const relationGainsRecurrentVsEventual = useMemo(() => {
+    let amountRecurrent = 0;
+    let amountEventual = 0;
+
+    gains
+      .filter(gain => {
+        const date = new Date(gain.date);
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear()
+
+        return month === monthSelected && year === yearSelected;
+      })
+      .forEach(gain => {
+        if (gain.frequency === 'recorrente') {
+          return amountRecurrent += +gain.amount;
+        } else {
+          return amountEventual += +gain.amount;
+
+        }
+      });
+
+    const total = amountRecurrent + amountEventual;
+
+    return [
+      { 
+        id: uuid(),
+        name: 'Recorrentes',
+        amount: amountRecurrent,
+        percent: +((amountRecurrent / total) * 100).toFixed(1),
+        color: "#f7931b"
+      },
+      {
+        id: uuid(),
+        name: 'Eventuais',
+        amount: amountEventual,
+        percent: +((amountEventual / total) * 100).toFixed(1),
+        color: "#e44c4e"
+      }
+    ]
+
+  }, [monthSelected, yearSelected])
+
+  console.log(relationGainsRecurrentVsEventual, relationExpensesRecurrentVsEventual)
 
   const handleSelectedDate = {
     month: (month: string) => {
@@ -233,6 +328,8 @@ const Dashboard: React.FC = () => {
         <MessageBox title={message.title} description={message.description} footerText={message.footerText} icon={message.icon} />
         <PieGraphic data={relationExpensesVsGains} />
         <HistoryBox data={historyData} lineColorEntry="#f7931b" lineColorOutput="#e44c4e" />
+        <BarGraphic data={relationGainsRecurrentVsEventual} title="Entradas" />
+        <BarGraphic data={relationExpensesRecurrentVsEventual} title="Saídas" />
       </C.Content>
     </C.Container>
   );
