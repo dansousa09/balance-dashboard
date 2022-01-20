@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { v4 as uuid } from "uuid";
 import * as C from "./styles";
 
 import ContentHeader from "../../components/ContentHeader";
@@ -14,6 +15,7 @@ import sadImg from '../../assets/sad.svg';
 
 import currentDate from "../../utils/currentDate";
 import listOfMonths from '../../utils/months';
+import PieGraphic from "../../components/PieGraphic";
 
 
 const Dashboard: React.FC = () => {
@@ -119,6 +121,33 @@ const Dashboard: React.FC = () => {
     }
   }, [totalBalance])
 
+  const relationExpensesVsGains = useMemo(() => {
+    const total = balance.totalGains + balance.totalExpenses
+
+    const gainsPercentual = Number(((balance.totalGains / total) * 100).toFixed(1));
+    const expensesPercentual = Number(((balance.totalExpenses / total) * 100).toFixed(1));
+    const data = [
+      {
+        id: uuid(),
+        name: "Entradas",
+        value: balance.totalGains,
+        percent: gainsPercentual,
+        color: '#e44c4e'
+      },
+      {
+        id: uuid(),
+        name: "Saídas",
+        value: balance.totalExpenses,
+        percent: expensesPercentual,
+        color: '#f7931b'
+      },
+    ]
+    return data;
+
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalBalance])
+
 
   const handleSelectedDate = {
     month: (month: string) => {
@@ -151,9 +180,9 @@ const Dashboard: React.FC = () => {
         <WalletBox title="saldo" amount={totalBalance} footerLabel="Atualizado com base nas entradas e saídas" icon="dolar" color="#4e41f0" />
         <WalletBox title="entradas" amount={balance.totalGains} footerLabel={`Última atualização em ${currentDate()}`} icon="arrowUp" color="#f7931b" />
         <WalletBox title="saídas" amount={balance.totalExpenses} footerLabel={`Última atualização em ${currentDate()}`} icon="arrowDown" color="#e44c4e" />
+        <MessageBox title={message.title} description={message.description} footerText={message.footerText} icon={message.icon} />
+        <PieGraphic data={relationExpensesVsGains} />
       </C.Content>
-      <MessageBox title={message.title} description={message.description} footerText={message.footerText} icon={message.icon} />
-
     </C.Container>
   );
 };
