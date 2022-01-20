@@ -1,6 +1,6 @@
 import React from 'react';
 import CountUp from 'react-countup';
-import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 
 import * as C from './styles';
 
@@ -42,6 +42,7 @@ const PieGraphic: React.FC<IPieGraphicProps> = ({ data }) => (
                             ))
                         }
                     </Pie>
+                    <Tooltip />
                 </PieChart>
             </ResponsiveContainer>
         </C.RightSide>

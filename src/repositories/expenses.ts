@@ -342,6 +342,13 @@ const expenses = [
     frequency: "eventual",
     date: "2022-07-19",
   },
+  {
+    description: "Pizza",
+    amount: "60.00",
+    type: "saída",
+    frequency: "eventual",
+    date: "2021-07-19",
+  },
 ];
 
 export default expenses;

@@ -6,6 +6,8 @@ import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
 import WalletBox from "../../components/WalletBox";
 import MessageBox from "../../components/MessageBox";
+import PieGraphic from "../../components/PieGraphic";
+import HistoryBox from "../../components/HistoryBox";
 
 import expenses from "../../repositories/expenses";
 import gains from "../../repositories/gains";
@@ -15,7 +17,6 @@ import sadImg from '../../assets/sad.svg';
 
 import currentDate from "../../utils/currentDate";
 import listOfMonths from '../../utils/months';
-import PieGraphic from "../../components/PieGraphic";
 
 
 const Dashboard: React.FC = () => {
@@ -145,8 +146,57 @@ const Dashboard: React.FC = () => {
     return data;
 
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalBalance])
+
+  const historyData = useMemo(() => {
+    return listOfMonths
+      .map((_, index) => {
+
+        let amountEntry = 0;
+        gains.forEach((item) => {
+          const date = new Date(item.date);
+          const month = date.getMonth();
+          const year = date.getFullYear();
+
+          if (month === index && year === yearSelected) {
+            try {
+              amountEntry += +item.amount
+            } catch (error) {
+              console.log(error)
+            }
+          }
+        });
+        let amountOutput = 0;
+        expenses.forEach((item) => {
+          const date = new Date(item.date);
+          const month = date.getMonth();
+          const year = date.getFullYear();
+
+          if (month === index && year === yearSelected) {
+            try {
+              amountOutput += +item.amount
+            } catch (error) {
+              console.log(error)
+            }
+          }
+        });
+
+        return {
+          monthNumber: index,
+          month: listOfMonths[index].substring(0, 3),
+          amountEntry: +amountEntry.toFixed(2),
+          amountOutput: +amountOutput.toFixed(2),
+        }
+
+      })
+      .filter(item => {
+        const currentMonth = new Date('2022-11-01').getMonth(); //Mostrando até outubro apenas
+        const currentYear = new Date().getFullYear();
+
+        return (yearSelected === currentYear && item.monthNumber <= currentMonth) || (yearSelected < currentYear)
+      })
+  }, [yearSelected])
 
 
   const handleSelectedDate = {
@@ -182,6 +232,7 @@ const Dashboard: React.FC = () => {
         <WalletBox title="saídas" amount={balance.totalExpenses} footerLabel={`Última atualização em ${currentDate()}`} icon="arrowDown" color="#e44c4e" />
         <MessageBox title={message.title} description={message.description} footerText={message.footerText} icon={message.icon} />
         <PieGraphic data={relationExpensesVsGains} />
+        <HistoryBox data={historyData} lineColorEntry="#f7931b" lineColorOutput="#e44c4e" />
       </C.Content>
     </C.Container>
   );
