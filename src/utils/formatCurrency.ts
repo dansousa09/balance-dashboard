@@ -1,5 +1,8 @@
-const formatCurrency = (stringCurrency: string) => {
-  return `R$ ${(+stringCurrency).toFixed(2)}`;
+const formatCurrency = (stringCurrency: string | number): string => {
+  return Number(stringCurrency).toLocaleString("pt-br", {
+    style: "currency",
+    currency: "BRL",
+  });
 };
 
 export default formatCurrency;

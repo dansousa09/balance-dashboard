@@ -1,5 +1,6 @@
 import React from 'react';
 import { ResponsiveContainer, LineChart, Line, XAxis, CartesianGrid, Tooltip } from 'recharts';
+import formatCurrency from '../../utils/formatCurrency';
 import * as C from './styles';
 
 interface IHistoryBoxProps {
@@ -33,7 +34,7 @@ const HistoryBox: React.FC<IHistoryBoxProps> = ({ data, lineColorEntry, lineColo
                 <LineChart data={data} margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#cecece" />
                     <XAxis dataKey="month" stroke="#cecece" />
-                    <Tooltip />
+                    <Tooltip formatter={(value: number | string) => formatCurrency(+value)} />
                     <Line type="monotone" dataKey="amountEntry" name="Entradas" stroke={lineColorEntry} strokeWidth={5} dot={{ r: 5 }} activeDot={{ r: 8 }} />
                     <Line type="monotone" dataKey="amountOutput" name="Saídas" stroke={lineColorOutput} strokeWidth={5} dot={{ r: 5 }} activeDot={{ r: 8 }} />
                 </LineChart>

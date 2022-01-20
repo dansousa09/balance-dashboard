@@ -185,8 +185,8 @@ const Dashboard: React.FC = () => {
         return {
           monthNumber: index,
           month: listOfMonths[index].substring(0, 3),
-          amountEntry: +amountEntry.toFixed(2),
-          amountOutput: +amountOutput.toFixed(2),
+          amountEntry: +amountEntry,
+          amountOutput: +amountOutput
         }
 
       })

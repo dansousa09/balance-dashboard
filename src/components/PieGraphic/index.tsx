@@ -42,7 +42,7 @@ const PieGraphic: React.FC<IPieGraphicProps> = ({ data }) => (
                             ))
                         }
                     </Pie>
-                    <Tooltip />
+                    <Tooltip formatter={(value: number | string) => `${+value}%`} />
                 </PieChart>
             </ResponsiveContainer>
         </C.RightSide>
