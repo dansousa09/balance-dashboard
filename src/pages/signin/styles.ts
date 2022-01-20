@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+
+
 export const Container = styled.div`
   height: 100vh;
   display: flex;
@@ -29,7 +31,7 @@ export const Logo = styled.div`
 
 export const Form = styled.form`
   width: 300px;
-  height: 400px;
+  height: 300px;
   padding: 30px;
   border-radius: 10px;
   display: flex;
@@ -41,7 +43,7 @@ export const Form = styled.form`
 
 export const FormTitle = styled.h1`
   color: ${(props) => props.theme.colors.white};
-  margin-bottom: 75px;
+  margin-bottom: 25px;
 
   &:after {
     content: "";

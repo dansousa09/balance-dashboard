@@ -1,5 +1,6 @@
 import React from 'react';
 import logoImg from '../../assets/logo.svg'
+import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 import * as C from './styles';
@@ -16,7 +17,7 @@ const signin: React.FC = () => {
         <C.FormTitle>Entrar</C.FormTitle>
         <Input required type="email" placeholder="e-mail" />
         <Input required type="password" placeholder="senha" />
-        <button type="submit">Entrar</button>
+        <Button type="submit">Entrar</Button>
       </C.Form>
     </C.Container>
   )
