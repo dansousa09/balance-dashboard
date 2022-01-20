@@ -6,13 +6,17 @@ interface ITitleContainerProps {
 
 export const Container = styled.header`
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 25px; 
+  padding: 25px 0;
   position: sticky; 
-  top: 0px; 
-  z-index: 55;
+  top: -25px; 
+  z-index: 55; 
+  background-color:  ${(props) => props.theme.colors.primary};
+  
 `;
 
 export const TitleContainer = styled.div<ITitleContainerProps>`

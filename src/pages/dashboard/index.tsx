@@ -20,9 +20,6 @@ import listOfMonths from '../../utils/months';
 import BarGraphic from "../../components/BarGraphic";
 
 
-// TODO: IMPLEMENTAR O STICKY NO CONTENT HEADER, ESCURECENDO O BACKGROUND QUANDO ULTRAPASSAR O TOP: 60px E O DEIXANDO FIXO
-
-
 const Dashboard: React.FC = () => {
   const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1)
   const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear())
@@ -291,8 +288,6 @@ const Dashboard: React.FC = () => {
     ]
 
   }, [monthSelected, yearSelected])
-
-  console.log(relationGainsRecurrentVsEventual, relationExpensesRecurrentVsEventual)
 
   const handleSelectedDate = {
     month: (month: string) => {
