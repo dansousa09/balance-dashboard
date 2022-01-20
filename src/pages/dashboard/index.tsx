@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
 import * as C from "./styles";
 
@@ -8,6 +8,7 @@ import WalletBox from "../../components/WalletBox";
 import MessageBox from "../../components/MessageBox";
 import PieGraphic from "../../components/PieGraphic";
 import HistoryBox from "../../components/HistoryBox";
+import BarGraphic from "../../components/BarGraphic";
 
 import expenses from "../../repositories/expenses";
 import gains from "../../repositories/gains";
@@ -17,7 +18,6 @@ import sadImg from '../../assets/sad.svg';
 
 import currentDate from "../../utils/currentDate";
 import listOfMonths from '../../utils/months';
-import BarGraphic from "../../components/BarGraphic";
 
 
 const Dashboard: React.FC = () => {
@@ -113,7 +113,7 @@ const Dashboard: React.FC = () => {
         footerText: "Tente equilibrar suas contas antes de considerar novos gastos",
         icon: sadImg
       }
-    } else if (balance.totalGains === 0 && balance.totalExpenses === 0 && totalBalance === 0 ) {
+    } else if (balance.totalGains === 0 && balance.totalExpenses === 0 && totalBalance === 0) {
       return {
         title: "Ops!",
         description: "Ainda sem registros...",
@@ -271,7 +271,7 @@ const Dashboard: React.FC = () => {
     const total = amountRecurrent + amountEventual;
 
     return [
-      { 
+      {
         id: uuid(),
         name: 'Recorrentes',
         amount: amountRecurrent,
@@ -290,22 +290,22 @@ const Dashboard: React.FC = () => {
   }, [monthSelected, yearSelected])
 
   const handleSelectedDate = {
-    month: (month: string) => {
+    month: useCallback((month: string) => {
       try {
         const parsedMonth = +month;
         setMonthSelected(parsedMonth);
       } catch (error) {
         console.log(error);
       }
-    },
-    year: (year: string) => {
+    }, []),
+    year: useCallback((year: string) => {
       try {
         const parsedYear = +year;
         setYearSelected(parsedYear);
       } catch (error) {
         console.log(error);
       }
-    }
+    }, [])
   }
 
   return (
