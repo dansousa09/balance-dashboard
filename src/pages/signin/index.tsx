@@ -1,31 +1,24 @@
-import React from "react";
-import ContentHeader from "../../components/ContentHeader";
-import SelectInput from "../../components/SelectInput";
-import { Container } from "./styles";
+import React from 'react';
+import logoImg from '../../assets/logo.svg'
 
-const SignIn: React.FC = () => {
-  const options = [
-    {
-      value: "Ana",
-      label: "Ana",
-    },
-    {
-      value: "Rodrigo",
-      label: "Rodrigo",
-    },
-    {
-      value: "Joaquina",
-      label: "Joaquina",
-    },
-  ];
+import * as C from './styles';
+
+const signin: React.FC = () => {
   return (
-    <Container>
-      <ContentHeader title="Dashboard" lineColor="#E44c4e">
-        <SelectInput options={options} onChange={() => console.log('Aqui')} />
-      </ContentHeader>
-    </Container>
-  );
-};
+    <C.Container>
+      <C.Logo>
+        <img src={logoImg} alt="Balance Dashboard" />
+        <h2>Balance Dashboard</h2>
+      </C.Logo>
 
-export default SignIn;
+      <C.Form>
+        <C.FormTitle>Entrar</C.FormTitle>
+        <input type="text" />
+        <input type="text" />
+        <button type="submit">Entrar</button>
+      </C.Form>
+    </C.Container>
+  )
+}
 
+export default signin;
