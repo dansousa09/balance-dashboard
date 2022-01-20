@@ -12,10 +12,15 @@ import {
   LogoImg,
   Title,
   MenuContainer,
-  MenuItemLink,
+  MenuItemLink, 
+  MenuItemButton
 } from "./styles";
 
+import { useAuth } from "../../context/auth";
+
 const Aside: React.FC = () => {
+  const { signOut } = useAuth()
+
   return (
     <Container>
       <Header>
@@ -24,7 +29,7 @@ const Aside: React.FC = () => {
       </Header>
 
       <MenuContainer>
-        <MenuItemLink href="/dashboard">
+        <MenuItemLink href="/">
           <MdDashboard />
           Dashboard
         </MenuItemLink>
@@ -42,10 +47,10 @@ const Aside: React.FC = () => {
         </MenuItemLink>
       </MenuContainer>
       <MenuContainer>
-        <MenuItemLink href="#">
+        <MenuItemButton onClick={() => signOut()} type="submit">
           <MdExitToApp />
           Sair
-        </MenuItemLink>
+        </MenuItemButton>
       </MenuContainer>
     </Container>
   );

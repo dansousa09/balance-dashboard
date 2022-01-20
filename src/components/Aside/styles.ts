@@ -43,3 +43,20 @@ export const MenuItemLink = styled.a`
     margin-right: 8px;
   }
 `;
+
+export const MenuItemButton = styled.button`
+  display: flex;
+  align-items: center;
+  color: ${({ theme }) => theme.colors.info};
+  background: none;
+  margin: 7px 0;
+  transition: opacity 0.3s;
+  &:hover {
+    opacity: 0.7;
+  }
+
+  > svg {
+    font-size: 24px;
+    margin-right: 8px;
+  }
+`;
