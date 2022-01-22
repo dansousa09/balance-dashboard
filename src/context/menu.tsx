@@ -13,7 +13,7 @@ const MenuContext = createContext<IMenuContext>({} as IMenuContext)
 
 const MenuProvider: React.FC<IMenuProviderProps> = ({ children }) => {
 
-    const [menuIsOpen, setMenuIsOpen] = useState<boolean>(true)
+    const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false)
 
     return (
         <MenuContext.Provider value={{ menuIsOpen, setMenuIsOpen }}>{children}</MenuContext.Provider>
