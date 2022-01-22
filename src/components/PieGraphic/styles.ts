@@ -12,6 +12,11 @@ export const Container = styled.div`
   color: ${(props) => props.theme.colors.white};
   border-radius: 7px;
   display: flex;
+
+  @media (max-width: 760px) {
+    width: 100%;
+  }
+
 `;
 
 export const LeftSide = styled.aside`

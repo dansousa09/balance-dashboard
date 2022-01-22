@@ -37,6 +37,11 @@ export const LegendContainer = styled.ul`
   min-width: 25%;
   display: flex;
   justify-content: space-evenly;
+
+  @media (max-width: 760px) {
+    width: 50%;
+    flex-direction: column;
+  }
 `;
 
 export const Legend = styled.li<ILegendProps>`

@@ -5,7 +5,9 @@ export const Container = styled.div`
   color: ${(props) => props.theme.colors.white};
   background-color: ${(props) => props.theme.colors.secundary};
   border-right: solid 1px ${(props) => props.theme.colors.gray};
-  padding: 20px;
+  padding: 20px; 
+
+  position: relative;
 `;
 
 export const Header = styled.div`

@@ -1,25 +1,29 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   width: 48%;
   min-height: 260px;
   margin: 10px 0;
   border-radius: 7px;
-  background-color: ${props => props.theme.colors.tertiary};
-  color: ${props => props.theme.colors.white};
+  background-color: ${(props) => props.theme.colors.tertiary};
+  color: ${(props) => props.theme.colors.white};
+
+  @media (max-width: 760px) {
+    width: 100%;
+  }
 `;
 
 export const LeftSide = styled.div`
   padding: 30px 20px;
 
   > h2 {
-      margin-bottom: 10px;
-      padding-left: 16px;
+    margin-bottom: 10px;
+    padding-left: 16px;
   }
 `;
 
 export const RightSide = styled.div`
-  flex: 1; 
+  flex: 1;
   height: 160px;
 `;
 
@@ -27,12 +31,10 @@ export const LegendContainer = styled.ul`
   list-style: none;
   width: 100%;
   max-height: 175px;
-  /* background-color: red; */
-  overflow-y: scroll; 
+  overflow-y: scroll;
   display: flex;
   justify-content: center;
   align-items: center;
-
 
   ::-webkit-scrollbar {
     width: 10px;
@@ -49,11 +51,15 @@ export const LegendContainer = styled.ul`
 `;
 
 export const Legend = styled.li`
-  display: flex; 
+  display: flex;
   justify-content: center;
   align-items: center;
-  padding: 5px; 
+  padding: 5px;
   width: 50%;
+
+  @media (max-width: 760px) {
+    width: 100%;
+  }
 
   > div {
     background-color: ${(props) => props.color};
@@ -64,11 +70,15 @@ export const Legend = styled.li`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 28px; 
+    padding: 0 28px;
     text-align: center;
   }
 
   > span {
-    margin-left: 8px;
+    margin-left: 8px; 
+    @media (max-width: 760px) {
+      margin-left: 4px; 
+
+  }
   }
 `;
