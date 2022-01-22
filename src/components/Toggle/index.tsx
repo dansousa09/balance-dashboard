@@ -1,6 +1,8 @@
 import React from "react";
 import { Container, ToggleLabel, ToggleSelector } from "./styles";
 
+import { useMenu } from "../../context/menu";
+
 interface IToggleProps {
   leftLabel: string;
   rightLabel: string;
@@ -10,8 +12,10 @@ interface IToggleProps {
 
 const Toggle: React.FC<IToggleProps> = ({ leftLabel, rightLabel, checked, onChange }) => {
 
+  const { menuIsOpen } = useMenu()
+
   return (
-    <Container>
+    <Container menuIsOpen={menuIsOpen} >
       <ToggleLabel>{leftLabel}</ToggleLabel>
       <ToggleSelector
         checked={checked}

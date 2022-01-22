@@ -12,20 +12,27 @@ import {
   LogoImg,
   Title,
   MenuContainer,
-  MenuItemLink, 
+  MenuItemLink,
   MenuItemButton
 } from "./styles";
 
 import { useAuth } from "../../context/auth";
+import { useMenu } from "../../context/menu";
+import CloseMenu from "../CloseMenu";
 
 const Aside: React.FC = () => {
   const { signOut } = useAuth()
+  const { menuIsOpen } = useMenu()
 
   return (
-    <Container>
-      <Header>
-        <LogoImg src={logoImg} />
-        <Title>Minha Carteira</Title>
+    <Container menuIsOpen={menuIsOpen}>
+      <Header menuIsOpen={menuIsOpen}>
+
+        <div className="logoHeader">
+          <LogoImg src={logoImg} />
+          <Title>Minha Carteira</Title>
+        </div>
+        {menuIsOpen && <div className="closeBtnHeader"><CloseMenu /></div>}
       </Header>
 
       <MenuContainer>
